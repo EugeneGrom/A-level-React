@@ -2782,8 +2782,8 @@ const Episode = ({ episode }) => {
     console.log(episode);
     return (
         <>
-            {Object.entries(episode).map(([key, value]) => (
-                <tr>
+            {Object.entries(episode).map(([key, value], index) => (
+                <tr key={index}>
                     {console.log(key)}
                     <td style={{ border: '2px solid green' }}>{key} </td>
                     <td style={{ border: '2px solid green' }}>{Array.isArray(value) ? (
@@ -2814,7 +2814,7 @@ const Episodes = () => {
 const Character = ({ name, gender, image }) => {
     return (
         <div style={{border: 'dashed', textAlign: 'center', width: '450px', paddingTop: '10px' }}>
-            <img src={image} />
+            <img src={image} alt='' />
             <p>Name: <span>{name}</span></p>
             <p>Gender: <span>{gender}</span></p>
         </div>
