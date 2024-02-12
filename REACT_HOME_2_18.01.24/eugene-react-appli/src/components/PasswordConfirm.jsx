@@ -7,8 +7,7 @@ const PasswordConfirm = ({ min }) => {
     const regExpLetters = /[A-Z]/;
     const regExpDigit = /[0-9]/;
     const regExpSymbols = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
-
-
+    
     function hasDigitUpper(value) {
         const str = value.split('');
         return (str.some(symbol => regExpDigit.test(symbol)) && str.some(symbol => regExpLetters.test(symbol)));
@@ -17,6 +16,9 @@ const PasswordConfirm = ({ min }) => {
     function hasSymbols(value) {
         return regExpSymbols.test(value);
     };
+
+    const isPassMatch = pass1 === pass2;
+    const isPassValidated = isPassMatch && pass1.length >= min && hasDigitUpper(pass1) && hasSymbols(pass1) || isPassMatch && pass2.length >= min && hasDigitUpper(pass2) && hasSymbols(pass2);
 
     return (
         <div style={{ textAlign: 'center' }}>
@@ -28,11 +30,12 @@ const PasswordConfirm = ({ min }) => {
 * не менш аніж ${min} символи,
 * мати щонайменше: 
 ^ 1 Велику літеру 
-^ 1 цифру`
+^ 1 цифру
+^ 1 спецсимвол (!, +, ? тощо)`
                 }
                 </pre>
                 <input
-                    style={{ color: pass1.length >= min && hasDigitUpper(pass1) ? 'inherit' : 'red' }}
+                    style={{ color: isPassValidated ? 'inherit' : 'red' }}
                     type="password"
                     value={pass1}
                     id="p1"
@@ -41,14 +44,14 @@ const PasswordConfirm = ({ min }) => {
             </label>
             {/* <br /> */}
             <label htmlFor='p2' style={{ textAlign: 'left', display: "inline-block" }}>
-                <pre> {
+                {/* <pre> {
                     `А цей пароль:
 * не менш аніж ${min} символи,
 * мати щонайменше:
 ^ 1 спецсимвол (!, +, ? тощо)`
-                } </pre>
+                } </pre> */}
                 <input
-                    style={{ color: pass2.length >= min && hasSymbols(pass2) ? 'inherit' : 'red' }}
+                    style={{ color: isPassValidated ? 'inherit' : 'red' }}
                     type="password"
                     value={pass2}
                     id="p2"
